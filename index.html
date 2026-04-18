@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sobrevive: Anomalía en Marte</title>
+    <!-- Aquí conectamos el CSS -->
+    <link rel="stylesheet" href="style.css">
+    
+    <!-- Importamos la librería 3D -->
+    <script type="importmap">
+        {
+            "imports": {
+                "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
+                "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"
+            }
+        }
+    </script>
+</head>
+<body>
+
+    <!-- Main Menu -->
+    <div id="main-menu" class="overlay">
+        <h1>Anomalía Phobos</h1>
+        <h2>Instalación de Investigación Marciana - Sector 4</h2>
+        
+        <div class="char-select-container">
+            <div class="char-card" data-char="soldier">
+                <h3>Soldado de Reconocimiento</h3>
+                <p>Armadura táctica dañada. Entrenado para el combate directo y la supervivencia extrema.</p>
+                <div class="char-stats">
+                    <span>Salud: Alta (150)</span>
+                    <span>Resistencia mental: Media</span>
+                    <span>Inventario inicial: Munición extra</span>
+                </div>
+            </div>
+            <div class="char-card" data-char="bio">
+                <h3>Bioingeniera de Campo</h3>
+                <p>Mentalidad analítica. Conoce la naturaleza de la infestación. Más resistente a la corrupción visual.</p>
+                <div class="char-stats">
+                    <span>Salud: Media (100)</span>
+                    <span>Resistencia mental: Alta</span>
+                    <span>Inventario inicial: Botiquines extras</span>
+                </div>
+            </div>
+            <div class="char-card" data-char="eng">
+                <h3>Ingeniero de Sistemas</h3>
+                <p>Equipo civil adaptado. Puede extraer más recursos del entorno y moverse en silencio.</p>
+                <div class="char-stats">
+                    <span>Salud: Media (100)</span>
+                    <span>Resistencia mental: Baja</span>
+                    <span>Inventario inicial: Baterías y herramientas</span>
+                </div>
+            </div>
+        </div>
+        
+        <div style="display: flex; gap: 20px; flex-wrap: wrap; justify-content: center;">
+            <button id="btn-fullscreen" class="btn" style="background: #222; border-color: #555;">Pantalla Completa</button>
+            <button id="btn-start" class="btn" disabled>Iniciar Incursión</button>
+        </div>
+    </div>
+
+    <!-- Dialogue UI -->
+    <div id="dialogue-overlay" class="overlay hidden">
+        <div class="dialogue-box">
+            <div id="dialogue-text" class="dialogue-text">Terminal de seguridad bloqueada. Se requiere puenteo manual.</div>
+            <div id="dialogue-options" class="dialogue-options"></div>
+        </div>
+    </div>
+
+    <!-- Death/End UI -->
+    <div id="end-screen" class="overlay hidden">
+        <h1 id="end-title">Sistemas Caídos</h1>
+        <h2 id="end-desc">Tu cuerpo se une a la biomasa de la instalación.</h2>
+        <button id="btn-restart" class="btn">Reiniciar Ciclo</button>
+    </div>
+
+    <!-- HUD -->
+    <div id="hud" class="hidden">
+        <div id="sanity-vignette"></div>
+        <div id="damage-flash"></div>
+        <div id="crosshair"></div>
+        <div id="interaction-prompt" class="hidden">[F] Interactuar</div>
+        
+        <div class="controls-hint">
+            <strong>W / S :</strong> Avanzar / Retroceder<br>
+            <strong>A / D :</strong> Desplazamiento lateral<br>
+            <strong>Q / E :</strong> Girar Izq / Der<br>
+            <strong>Shift :</strong> Correr<br>
+            <strong>X :</strong> Linterna<br>
+            <strong>Espacio :</strong> Disparar<br>
+            <strong>F :</strong> Interactuar
+        </div>
+
+        <div id="log-panel"></div>
+
+        <div id="bottom-left" class="hud-panel">
+            <div class="stat-row">
+                <div class="stat-label">INTEGR.</div>
+                <div class="stat-bar-bg"><div id="hp-fill" class="stat-bar-fill" style="width: 100%;"></div></div>
+            </div>
+            <div class="stat-row">
+                <div class="stat-label">ENERGÍA</div>
+                <div class="stat-bar-bg"><div id="stamina-fill" class="stat-bar-fill" style="width: 100%;"></div></div>
+            </div>
+            <div class="stat-row">
+                <div class="stat-label">CORDURA</div>
+                <div class="stat-bar-bg"><div id="sanity-fill" class="stat-bar-fill" style="width: 100%;"></div></div>
+            </div>
+        </div>
+
+        <div id="bottom-right" class="hud-panel">
+            <span id="ammo-count">12</span><br>
+            <span id="ammo-label">Balas pesadas</span>
+        </div>
+    </div>
+
+    <!-- 3D Container -->
+    <div id="game-container"></div>
+
+    <!-- Aquí conectamos la lógica del juego -->
+    <script type="module" src="game.js"></script>
+</body>
+</html>
